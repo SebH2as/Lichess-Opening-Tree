@@ -7,9 +7,9 @@ import LichessContext from "../../contex/lichess/LichessContext";
 const UserGames = () => {
   const { games, loading } = useContext(LichessContext);
 
-  const splitIdNode = (node) => {
+  const splitIdNode = (node, number) => {
     let idNode = node.split(' ');
-    return idNode[1]
+    return idNode[number]
   }
 
   const winRate = (white, black, draw) => {
@@ -52,10 +52,10 @@ const UserGames = () => {
     <>
     {/* `foreignObject` requires width & height to be explicitly set. */}
     <foreignObject {...foreignObjectProps}>
-    <div className="dropdown dropdown-right dropdown-hover z-0" onClick={toggleNode}>
-      <label tabIndex={0} className="btn m-1 w-12 h-2 text-sm z-0">{splitIdNode(nodeDatum.id)}</label>
-      <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-72 z-100">
-        <li  z-100>{winRate(nodeDatum.data.attributes?.white, nodeDatum.data.attributes?.black, nodeDatum.data.attributes?.draw)}</li>
+    <div className="dropdown dropdown-right dropdown-hover " onClick={toggleNode}>
+      <label tabIndex={0} className="badge badge-sm m-1 w-12">{splitIdNode(nodeDatum.id, 1)}</label>
+      <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-72">
+        <li ><p className="text-sm" >{winRate(nodeDatum.data.attributes?.white, nodeDatum.data.attributes?.black, nodeDatum.data.attributes?.draw)}</p></li>
       </ul>
     </div>
     </foreignObject>
@@ -69,7 +69,7 @@ const UserGames = () => {
   const separation = { siblings: 0.25, nonSiblings: 0.25 };
   const scaleExtent = { max: 2, min: 0 }
   const translate = { x:650 , y:75}
-  const foreignObjectProps = { width: nodeSize.x + 75, height: nodeSize.y +50, x: -32 , y: -32 };
+  const foreignObjectProps = { width: nodeSize.x + 75, height: nodeSize.y +75, x: -32 , y: -15 };
   
   if (Object.keys(treeData).length !== 0 && treeData.constructor !== Object) {
 
@@ -79,7 +79,7 @@ const UserGames = () => {
       orientation="vertical" 
       zoom="1.5"
       depthFactor="50"
-      //initialDepth="1"
+      initialDepth="1"
       separation={separation}
       nodeSize={nodeSize} 
       scaleExtent={scaleExtent} 
