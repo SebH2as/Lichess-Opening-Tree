@@ -52,7 +52,7 @@ export const LichessProvider = ({ children }) => {
     const color = colorChoice;
 
     const response = await fetch(
-      `${LICHESS_URL}/api/games/user/${user}?max=100&color=${color}&perfType="bullet","blitz","rapid","classical"`,
+      `${LICHESS_URL}/api/games/user/${user}?max=10&color=${color}&perfType="bullet","blitz","rapid","classical"`,
       { headers: { Accept: "application/x-ndjson" } }
     );
     return response;

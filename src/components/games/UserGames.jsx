@@ -18,38 +18,55 @@ const UserGames = () => {
     let blackWin = (black * 100) / totalGames;
     let draws = (draw * 100) / totalGames;
     let result =
-      "White victory " +
+      "White " +
       Math.round(whiteWin) +
       "% " +
-      "Black victory " +
+      "Black " +
       Math.round(blackWin) +
       "% " +
       "Draws " +
       Math.round(draws) +
-      "%";
+      "%" +
+      " (W: " +
+      white +
+      " /B: " +
+      black +
+      " /D: " +
+      draw +
+      ")";
 
     return result;
   };
+
+  const findLeafOrNodeId = (node) => {
+    if(node === "white" || node === "black" || node === "draw"){
+      return splitIdNode(node, 0)
+    }
+
+    return splitIdNode(node, 1)
+  }
 
   const renderForeignObjectNode = ({
     nodeDatum,
     toggleNode,
     foreignObjectProps,
   }) => (
+    
     <foreignObject {...foreignObjectProps}>
+      
       <div
-        className="dropdown dropdown-right dropdown-hover "
+        className="dropdown dropdown-hover "
         onClick={toggleNode}
       >
-        <label tabIndex={0} className="badge badge-sm m-1 w-12">
-          {splitIdNode(nodeDatum.id, 1)}
+        <label tabIndex={0} className="badge badge-sm m-1 w-12 hover:bg-sky-300">
+          {findLeafOrNodeId(nodeDatum.id)}
         </label>
         <ul
           tabIndex={0}
-          className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-72"
+          className="dropdown-content p-2 bg-base-100 rounded-box w-72"
         >
           <li>
-            <p className="text-sm">
+            <p className="italic pt-4 -mt-5" style={{fontSize : "12px"}}>
               {winRate(
                 nodeDatum.data.attributes?.white,
                 nodeDatum.data.attributes?.black,
@@ -66,7 +83,7 @@ const UserGames = () => {
   const nodeSize = { x: 300, y: 500 };
   const separation = { siblings: 0.25, nonSiblings: 0.25 };
   const scaleExtent = { max: 2, min: 0 };
-  const translate = { x: 650, y: 75 };
+  const translate = { x: 650, y: 50 };
   const foreignObjectProps = {
     width: nodeSize.x + 75,
     height: nodeSize.y + 75,
@@ -84,7 +101,7 @@ const UserGames = () => {
           data={treeData}
           pathFunc="elbow"
           orientation="vertical"
-          zoom="1.5"
+          zoom="1.75"
           depthFactor="50"
           //initialDepth="1"
           separation={separation}
