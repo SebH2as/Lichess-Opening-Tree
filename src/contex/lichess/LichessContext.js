@@ -45,13 +45,14 @@ export const LichessProvider = ({ children }) => {
     return loop();
   };
 
-  const stream = async (text) => { // get all user games 
+  const stream = async (text, colorChoice) => { // get all user games 
     setLoading();
 
     const user = text;
+    const color = colorChoice;
 
     const response = await fetch(
-      `${LICHESS_URL}/api/games/user/${user}?max=100&color=white&perfType="bullet","blitz","rapid","classical"`,
+      `${LICHESS_URL}/api/games/user/${user}?max=100&color=${color}&perfType="bullet","blitz","rapid","classical"`,
       { headers: { Accept: "application/x-ndjson" } }
     );
     return response;
@@ -103,20 +104,7 @@ export const LichessProvider = ({ children }) => {
     }
 
     // console.log(obj.winner)
-    // console.log(arrayMovesNumber[nbOfMoves + 1].parent)
-    
-    if(groupedArray.findIndex(element => arrayMovesNumber[nbOfMoves + 1] === "white" && element.parent === arrayMovesNumber[nbOfMoves + 1].parent) > -1){
-      //arrayMovesNumber[i].name = arrayMovesNumber[i].name + " +1"
-      console.log(arrayMovesNumber[nbOfMoves + 1].parent + ' white')
-    }
-    if(groupedArray.findIndex(element => arrayMovesNumber[nbOfMoves + 1] === "black" && element.parent === arrayMovesNumber[nbOfMoves + 1].parent) > -1){
-      arrayMovesNumber[7].name = arrayMovesNumber[7].name + " +1";
-      console.log(arrayMovesNumber[7].parent + ' black ' + arrayMovesNumber[7].count)
-    }
-    if(groupedArray.findIndex(element => arrayMovesNumber[nbOfMoves + 1].name === "draw" && element.parent === arrayMovesNumber[nbOfMoves + 1].parent) > -1){
-      //arrayMovesNumber[i].name = arrayMovesNumber[i].name + " +1"
-    }
-      
+    // console.log(arrayMovesNumber[nbOfMoves + 1].parent)     
     //console.log(arrayMovesNumber)
     
     for(let i=0; i < arrayMovesNumber.length; i++){ // remove doublon or more in arrayMoveNumber and update white black draw results

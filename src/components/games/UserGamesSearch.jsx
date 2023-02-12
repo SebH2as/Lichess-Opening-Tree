@@ -17,7 +17,8 @@ const UserGamesSearch = () => {
     if (text === "") {
       setAlert('Please enter a player name', 'error')
     } else {
-      stream(text).then(readStream(onMessage)).then(onComplete);
+      console.log(colorChoice)
+      stream(text, colorChoice).then(readStream(onMessage)).then(onComplete);
       
     }
   };
@@ -26,6 +27,14 @@ const UserGamesSearch = () => {
     clearUserGames()
     setText('')
   }
+
+  const [colorChoice , setColorChoice] = useState("white")
+
+  const onColorChange = e => {
+    setColorChoice(e.target.value)
+    console.log(colorChoice)
+  }
+
 
   return (
     <div className="grid grid-cols-2">
@@ -40,6 +49,27 @@ const UserGamesSearch = () => {
                 value={text}
                 onChange={handleChange}
               />
+              <input
+                type="radio"
+                className="radio mt-2 ml-5"
+                name="colorChoice"
+                value="white"
+                id="white"
+                checked={colorChoice === "white"}
+                onChange={onColorChange}
+              />
+              <label className="label cursor-pointer inline-block " htmlFor="white">White</label>
+
+              <input
+                type="radio"
+                className="radio"
+                name="colorChoice"
+                value="black"
+                id="black"
+                checked={colorChoice === "black"}
+                onChange={onColorChange}
+              />
+              <label className="label cursor-pointer inline-block " htmlFor="black">Black</label>
               <button
                 type="submit"
                 className="absolute top-0 right-0 rounded-l-none w-36 btn btn-lg"
@@ -50,7 +80,7 @@ const UserGamesSearch = () => {
           </div>
         </form>
       </div>
-      {Object.keys(games).length != 0 && (
+      {Object.keys(games).length !== 0 && (
         <div>
           <button onClick={handleClearGames} className="btn btn-ghost btn-lg">
             Clear
