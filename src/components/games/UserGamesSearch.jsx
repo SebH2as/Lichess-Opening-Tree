@@ -17,8 +17,7 @@ const UserGamesSearch = () => {
     if (text === "") {
       setAlert('Please enter a player name', 'error')
     } else {
-      console.log(colorChoice)
-      stream(text, colorChoice).then(readStream(onMessage)).then(onComplete);
+      stream(text, colorChoice, nbOfGames).then(readStream(onMessage)).then(onComplete);
       
     }
   };
@@ -32,7 +31,12 @@ const UserGamesSearch = () => {
 
   const onColorChange = e => {
     setColorChoice(e.target.value)
-    console.log(colorChoice)
+  }
+
+  const [nbOfGames , setNbOfGames] = useState("100")
+
+  const onNbOfGamesChange = e => {
+    setNbOfGames(e.target.value)
   }
 
 
@@ -70,6 +74,40 @@ const UserGamesSearch = () => {
                 onChange={onColorChange}
               />
               <label className="label cursor-pointer inline-block " htmlFor="black">Black</label>
+
+              <input
+                type="radio"
+                className="radio ml-10"
+                name="nbOfGames"
+                value="10"
+                id="10"
+                checked={nbOfGames === "10"}
+                onChange={onNbOfGamesChange}
+              />
+              <label className="label cursor-pointer inline-block " htmlFor="10">10 games</label>
+
+              <input
+                type="radio"
+                className="radio"
+                name="nbOfGames"
+                value="100"
+                id="100"
+                checked={nbOfGames === "100"}
+                onChange={onNbOfGamesChange}
+              />
+              <label className="label cursor-pointer inline-block " htmlFor="10">100 games</label>
+
+              <input
+                type="radio"
+                className="radio"
+                name="nbOfGames"
+                value="1000"
+                id="1000"
+                checked={nbOfGames === "1000"}
+                onChange={onNbOfGamesChange}
+              />
+              <label className="label cursor-pointer inline-block " htmlFor="10">1000 games</label>
+
               <button
                 type="submit"
                 className="absolute top-0 right-0 rounded-l-none w-36 btn btn-lg"

@@ -45,14 +45,15 @@ export const LichessProvider = ({ children }) => {
     return loop();
   };
 
-  const stream = async (text, colorChoice) => { // get all user games 
+  const stream = async (text, colorChoice, nbOfGames) => { // get all user games 
     setLoading();
 
     const user = text;
     const color = colorChoice;
+    const gameNb = parseInt(nbOfGames);
 
     const response = await fetch(
-      `${LICHESS_URL}/api/games/user/${user}?max=10&color=${color}&perfType="bullet","blitz","rapid","classical"`,
+      `${LICHESS_URL}/api/games/user/${user}?max=${gameNb}&color=${color}&perfType="bullet","blitz","rapid","classical"`,
       { headers: { Accept: "application/x-ndjson" } }
     );
     return response;
@@ -64,7 +65,7 @@ export const LichessProvider = ({ children }) => {
 
     let arrayMoves = obj.moves.split(" ");
 
-    const nbOfMoves = 6; // number of moves used for analysis
+    const nbOfMoves = 8; // number of moves used for analysis
 
     arrayMoves.length = nbOfMoves;
 
