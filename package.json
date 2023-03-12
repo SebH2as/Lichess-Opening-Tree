@@ -1,5 +1,6 @@
 {
   "name": "opening-tree",
+  "homepage": "LichessOpeningTree.sebh2as.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
